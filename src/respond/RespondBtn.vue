@@ -46,7 +46,7 @@ export default {
                 console.log(error);
             });
         },
-
+        
         // 学生抢答
         goSelfSign() {
             this.$axios.post('responder/mutex?c_id='+this.$route.query.classVal+"&uId="+this.userEmail)

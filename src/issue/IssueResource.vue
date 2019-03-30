@@ -1,9 +1,9 @@
 <!--
- * @Description: 资源列表组件
+ * @Description: 展示任务列表
  * @Author: Jensen
  * @LastEditors: Please set LastEditors
- * @Date: 2019-03-17 16:50:00
- * @LastEditTime: 2019-03-30 13:57:34
+ * @Date: 2019-03-30 15:36:55
+ * @LastEditTime: 2019-03-30 16:13:57
  -->
 
 <template>
@@ -18,7 +18,11 @@
                         <div class="title">
                             <p>{{ item.rName }}</p>
                         </div>
-                        <div class="time"><span>{{ item.rCreatetime }}</span></div>
+                        <div class="issue-text"><p>任务描述：</p><span>{{ item.rCreatetime }}</span></div>
+                        <div class="time">
+                            <p>发布者：</p><span>{{ item.rCreatetime }}</span>
+                            <span>&emsp;&emsp;&emsp;{{ item.rCreatetime }}</span>
+                        </div>
                     </div>
                     <div v-if="!classType" class="del-resource">
                         <a href="javascript:void(0)" @click="delRes(item.rId)">删除</a>
@@ -33,7 +37,7 @@
 import _session from '@/session/index'
 
 export default {
-    name: 'Resource',
+    name: 'IssueResource',
     props: {
         options: {
             type: Array
@@ -100,6 +104,7 @@ export default {
     }
     p {
         color: #000;
+        margin: 0;
     }
     span {
         color: #666;
@@ -115,7 +120,7 @@ export default {
     }
     .list-items li {
         width: 940px;
-        height: 100px;
+        height: 120px;
         border: 1px solid transparent;
         border-bottom-color: #ccc;
     }
@@ -128,8 +133,9 @@ export default {
         padding: 19px;
     }
     .resource-item .resource-img {
-        width: 60px;
-        height: 60px;
+        width: 80px;
+        height: 80px;
+        align-self: center;
         margin-right: 19px;
     }
     .resource-info {
@@ -138,6 +144,15 @@ export default {
         justify-content: space-between;
         max-width: 400px;
         overflow: hidden;
+    }
+    .issue-text p,.time p {
+        display: inline;
+    }
+    .issue-text span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
     }
     .del-resource {
         margin-left: auto;

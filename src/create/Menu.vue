@@ -3,7 +3,7 @@
  * @Author: Jensen
  * @LastEditors: Please set LastEditors
  * @Date: 2019-03-16 15:21:55
- * @LastEditTime: 2019-03-24 21:35:19
+ * @LastEditTime: 2019-03-30 13:55:56
  -->
 
 <template>
@@ -34,6 +34,9 @@
                     @click="updataClass('classD','qiangda')"
                     :class="cl.classD ? 'class-a' : 'class-b' "><span v-text="classType == 'join'?'参与抢答':'发布抢答'"></span></li>
                     <li
+                    @click="updataClass('classF','issue')"
+                    :class="cl.classF ? 'class-a' : 'class-b' "><span>发布任务</span></li>
+                    <li
                     @click="goTalk"
                     :class="cl.classE ? 'class-a' : 'class-b' "><span>讨论室</span></li>
                 </ul>
@@ -62,7 +65,8 @@ export default {
                 classB: false,
                 classC: false,
                 classD: false,
-                classE: false
+                classE: false,
+                classF: false
             },
         }
     },
@@ -112,7 +116,7 @@ export default {
         },
         goTalk() {
             let email = _session.getUserName();
-            window.open("http://www.zhkt.fun/talk?c_id="+this.$route.query.classVal+"&uEmail="+email);
+            window.open("/talk.html?c_id="+this.$route.query.classVal+"&uEmail="+email);
         }
     }
 }

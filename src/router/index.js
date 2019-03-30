@@ -26,6 +26,8 @@
  import Qiangda from '@/respond/Qiangda'
  import Sign from '@/sign/Sign'
  import RespondBtn from '@/respond/RespondBtn'
+ import Issue from '@/issue/Issue'
+ import UpIssue from '@/issue/UpIssue'
 
  Vue.use(vueRouter);
 
@@ -104,6 +106,12 @@
                      },{
                         path: 'qiangda',
                         component: Qiangda
+                     },{
+                        path: 'issue',
+                        component: Issue
+                     },{
+                        path: 'up-issue',
+                        component: UpIssue
                      }
                   ]
                }

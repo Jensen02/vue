@@ -27,6 +27,7 @@ export default {
         if(userId) {
                 this.$axios.post('/user/name?id='+userId).then(res => {
                 this.userName = res.data.msg;
+                _session.setUser(this.userName);
             })
         } else {
             alert("请登录");

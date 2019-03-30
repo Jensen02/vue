@@ -5,7 +5,7 @@
             <div class="form-group has-feedback">
                 <label class="control-label col-sm-3" for="inputSuccess3">用户名</label>
                 <div class="col-sm-9">
-                    <input type="text" v-model="userName" class="form-control" id="inputSuccess3" @change="userNameCheck" placeholder="请输入5~20位由中文、字母、数字组成的用户名" aria-describedby="inputSuccess3Status">
+                    <input type="text" v-model="userName" class="form-control" id="inputSuccess3" @change="userNameCheck" placeholder="请输入2~20位由中文、字母、数字组成的用户名" aria-describedby="inputSuccess3Status">
                     <span class="glyphicon glyphicon-remove form-control-feedback" 
                     v-show="!reg.userName" aria-hidden="true"></span>
                 </div>
