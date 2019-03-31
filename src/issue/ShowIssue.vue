@@ -3,7 +3,7 @@
  * @Author: Jensen
  * @LastEditors: Please set LastEditors
  * @Date: 2019-03-30 13:47:19
- * @LastEditTime: 2019-03-30 16:16:57
+ * @LastEditTime: 2019-03-31 21:11:00
  -->
 
 <template>
@@ -13,7 +13,23 @@
                 <span>当前位置：<a @click="goAdd" href='javascript:void(0)'>任务列表</a> > 任务详情</span>
             </div>
             <div class="net-data">
-                <div class="form-group">
+                <div class="data-detail">
+                    <div class="data-title">
+                        <h4>任务主题：</h4>
+                        <span>{{ title }}</span>
+                    </div>
+                    <div class="data-author">
+                        <h4>发布者：</h4>
+                        <span>{{ userName }}</span>
+                    </div>
+                    <div class="data-time">
+                        <h4>发布时间：</h4>
+                        <span>{{ time }}</span>
+                    </div>
+                </div>
+                <div class="data-text">
+                    <h4>任务详情：</h4>
+                    <p>{{ textarea }}</p>
                 </div>
             </div>
         </div>
@@ -21,57 +37,36 @@
 </template>
 
 <script>
-import _validate from '@/validate/index'
-import _session from '@/session/index'
 
 export default {
     name: 'UpIssue',
     data() {
         return {
             title: '',
-            textarea3: '',
+            textarea: '',
+            time: '',
             userName: ''
         }
     },
     created() {
-        this.userName = _session.getUser();
+        this.$axios.post('/task/one?tId='+this.$route.query.rId)
+        .then(res => {
+            this.textarea = res.data.tContent;
+            this.title = res.data.tTitle;
+            this.userName = res.data.tName;
+            this.time = res.data.tTime;
+        })
+        .catch(error => {
+            console.log(error);
+        })
     },
     methods: {
-        checkIssue() {
-            if(!_validate.issueText(this.textarea3)) {
-                alert("任务描述输入错误，请重新输入3~50位字符的任务描述");
-            }
-        },
-        // 发布任务
-        submitLocal() {
-            if(_validate.issueText(this.textarea3) && this.title && this.userName) {
-                this.$axios.post('/task/add?cId='+this.$route.query.classVal+"&tTitle="+this.title+"&tContent="+this.textarea3+"&tName="+this.userName)
-                .then(res => {
-                    console.log(res);
-                    if(res.data.msg == "1") {
-                        alert("任务发布成功,即跳转至任务列表页");
-                        this.$router.push({
-                            path: '/home/manage-create/issue',
-                            query: {
-                                classVal: this.$route.query.classVal
-                            }
-                        });
-                    } else {
-                        alert("任务发布失败");
-                    }
-                })
-                .catch(error => {
-                    console.log(error);
-                })
-            } else {
-                alert("请检查任务信息是否填写完整");
-            }
-        },
         // 取消上传，前往任务发布页面
         goAdd() {
             this.$router.push({
-                path: '/home/manage-create/issue',
+                path: '/home/class-join/issue',
                 query: {
+                    cl: this.$route.query.cl,
                     classVal: this.$route.query.classVal
                 }
             })
@@ -79,5 +74,50 @@ export default {
     }
 }
 </script>
-
+    
 <style scoped>
+    h4 {
+        display: inline-block;
+        max-width: 100px;
+        font-size: 16px;
+        color: #ff8000;
+    }
+    span {
+        display: inline-block;
+        font-size: 14px;
+        color: #666;
+        line-height: 20px;
+    }
+    p {
+        text-indent: 35px;
+        font-size: 16px;
+    }
+    .local{
+        min-height: 600px;
+        background-color: #f5f5f5;
+    }
+    .add-local {
+        width: 980px;
+        margin: 0 auto;
+    }
+    .add-local .jump {
+        height: 50px;
+        line-height: 50px;
+    }
+    .add-local .net-data {
+        min-height: 500px;
+        background-color: #fff;
+        padding: 30px 50px 0;
+    }
+    .data-detail {
+        height: 126px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #c1c1c1;
+    }
+    .data-text {
+        padding-top: 10px;
+    }
+    .data-text h4 {
+        font-size: 17px;
+    }
+</style>

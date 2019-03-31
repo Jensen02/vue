@@ -3,7 +3,7 @@
  * @Author: Jensen
  * @LastEditors: Please set LastEditors
  * @Date: 2019-03-21 18:47:26
- * @LastEditTime: 2019-03-25 22:51:45
+ * @LastEditTime: 2019-03-31 21:16:59
  -->
 
 <template>
@@ -73,6 +73,7 @@ export default {
             if(res.data.msg == "1") {
                 this.getQuestion();
             } else {
+                this.success = false;
                 alert("老师暂时没有发布抢答");
             }
         })

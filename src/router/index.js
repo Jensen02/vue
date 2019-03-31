@@ -28,6 +28,7 @@
  import RespondBtn from '@/respond/RespondBtn'
  import Issue from '@/issue/Issue'
  import UpIssue from '@/issue/UpIssue'
+ import ShowIssue from '@/issue/ShowIssue'
 
  Vue.use(vueRouter);
 
@@ -67,6 +68,12 @@
                      },{
                         path: 'qiangda',
                         component: RespondBtn
+                     },{
+                        path: 'issue',
+                        component: Issue
+                     },{
+                        path: 'detail',
+                        component: ShowIssue
                      }
                   ]
                },{

@@ -75,7 +75,6 @@
                     }).catch(error => {
                         console.log(error);
                     });
-                    // alert("邮箱和密码校验通过");
                 } else if(this.reg.email && !this.reg.password) {
                     alert("密码校验未通过,请输入正确的密码");
                 } else if(!this.reg.email && this.reg.password) {

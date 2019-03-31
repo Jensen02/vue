@@ -3,29 +3,29 @@
  * @Author: Jensen
  * @LastEditors: Please set LastEditors
  * @Date: 2019-03-30 15:36:55
- * @LastEditTime: 2019-03-30 16:13:57
+ * @LastEditTime: 2019-03-31 20:21:16
  -->
 
 <template>
     <div class="resource-list">
         <ul class="list-items">
-            <li class="resource-item" v-for="item in options" v-bind:key="item.rId">
-                <a href="javascript:void(0)" @click="lookResource(item.rUrl,item.rScore,item.rId)" class="res-data">
+            <li class="resource-item" v-for="item in options" v-bind:key="item.tId">
+                <a href="javascript:void(0)" @click="lookResource(item.tId)" class="res-data">
                     <div class="resource-img">
-                        <img src="./../../public/class-images/icon_res_link@2x.png" alt="资源项">
+                        <img src="./../../public/class-images/icon_res_website@2x.png" alt="资源项">
                     </div>
                     <div class="resource-info">
                         <div class="title">
-                            <p>{{ item.rName }}</p>
+                            <p>{{ item.tTitle }}</p>
                         </div>
-                        <div class="issue-text"><p>任务描述：</p><span>{{ item.rCreatetime }}</span></div>
+                        <div class="issue-text"><p>任务描述：</p><span>{{ item.tContent }}</span></div>
                         <div class="time">
-                            <p>发布者：</p><span>{{ item.rCreatetime }}</span>
-                            <span>&emsp;&emsp;&emsp;{{ item.rCreatetime }}</span>
+                            <p>发布者：</p><span>{{ item.tName }}</span>
+                            <span>&emsp;&emsp;&emsp;{{ item.tTime }}</span>
                         </div>
                     </div>
                     <div v-if="!classType" class="del-resource">
-                        <a href="javascript:void(0)" @click="delRes(item.rId)">删除</a>
+                        <a href="javascript:void(0)" @click="delRes(item.tId)">删除</a>
                     </div>
                 </a>
             </li>
@@ -58,15 +58,15 @@ export default {
         }
     },
     methods: {
-        // 删除已添加的资源
+        // 删除已发布的任务
         delRes(keyVal) {
-            this.$axios.post('/resource/del?r_id='+keyVal)
+            this.$axios.post('/task/del?id='+keyVal)
             .then(res => {
                 if(res.data.msg == '1') {
-                    alert("删除资源成功");
+                    alert("删除任务成功");
                     history.go(0);
                 } else {
-                    alert("删除资源失败");
+                    alert("删除任务失败");
                 }
             })
             .catch(error => {
@@ -74,22 +74,17 @@ export default {
             })
         },
 
-        // 查看资源
-        lookResource(urlVal,scoreVal,rId) {
+        // 查看任务详情
+        lookResource(rId) {
             if(this.classType) {
-                if(urlVal.search("www.") != -1 || urlVal.search("http") != -1) {
-                    let url = urlVal.substring(0,4) == "http" ? urlVal : "http://"+urlVal;
-                    this.$axios.post('/resource/download?url='+urlVal+"&num="+scoreVal+"&c_id="+this.$route.query.classVal+"&u_id="+this.userEmail+"&r_id="+rId)
-                    .then(res => {
-                        console.log(res);
-                        window.open(url);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-                } else {
-                    window.open("/resource/download?url="+urlVal+"&num="+scoreVal+"&c_id="+this.$route.query.classVal+"&u_id="+this.userEmail+"&r_id="+rId);
-                }
+                this.$router.push({
+                    path: '/home/class-join/detail',
+                    query: {
+                        cl: this.$route.query.cl,
+                        rId: rId,
+                        classVal: this.$route.query.classVal
+                    }
+                });
             }
         }
     }
@@ -142,16 +137,23 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        max-width: 400px;
+        max-width: 450px;
         overflow: hidden;
     }
+    .issue-text {
+        display: flex;
+    }
     .issue-text p,.time p {
-        display: inline;
+        display: inline-block;
+        min-width: 70px;
+        font-size: 14px;
     }
     .issue-text span {
+        line-height: 20px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        font-size: 14px;
 
     }
     .del-resource {

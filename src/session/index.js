@@ -1,6 +1,6 @@
 export default {
     setUserName(userName) {
-        sessionStorage.setItem("username",userName);
+        sessionStorage.setItem("userName",userName);
     },
     getUserName() {
         return sessionStorage.getItem("userName");

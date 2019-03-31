@@ -3,7 +3,7 @@
  * @Author: Jensen
  * @LastEditors: Please set LastEditors
  * @Date: 2019-03-30 13:47:03
- * @LastEditTime: 2019-03-30 15:40:44
+ * @LastEditTime: 2019-03-31 21:11:52
  -->
 
 <template>
@@ -43,10 +43,9 @@ export default {
           spinner: 'el-icon-loading',
           background: 'rgba(0, 0, 0, 0.7)'
         });
-        // 获取所有资源列表
-        this.$axios.post('/resource/course/list?c_id='+this.$route.query.classVal)
+        // 获取所有任务列表
+        this.$axios.post('/task/list?cId='+this.$route.query.classVal)
         .then(res => {
-            console.log(res);
             this.resList = res.data;
             this.wran = this.resList.length > 0 ? false : true; 
             loading.close();
@@ -61,7 +60,7 @@ export default {
         }
     },
     methods: {
-        // 跳转至添加本地文件页面
+        // 跳转至任务发布页面
         goLocal() {
             this.$router.push({
                 path: '/home/manage-create/up-issue',
